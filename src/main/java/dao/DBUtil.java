@@ -14,6 +14,7 @@ public class DBUtil {
     private static final String password = "123456789";
     private static volatile DataSource dataSource = null;
     public static DataSource getDataSource(){
+
         if(dataSource == null){
             synchronized (DBUtil.class){
                 if(dataSource==null){
