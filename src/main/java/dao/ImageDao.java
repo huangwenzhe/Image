@@ -110,6 +110,38 @@ public class ImageDao {
             DBUtil.Close(connection, statement, null);
         }
     }
+    public Image selectByMd5(String md5) {
+        // 1. 获取数据库连接
+        Connection connection = DBUtil.getConnection();
+        // 2. 构造 SQL 语句
+        String sql = "select * from image_table where md5 = ?";
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        try {
+            // 3. 执行 SQL 语句
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, md5);
+            resultSet = statement.executeQuery();
+            // 4. 处理结果集
+            if (resultSet.next()) {
+                Image image = new Image();
+                image.setImageId(resultSet.getInt("imageId"));
+                image.setImageName(resultSet.getString("imageName"));
+                image.setSize(resultSet.getInt("size"));
+                image.setUploadTime(resultSet.getString("uploadTime"));
+                image.setContentType(resultSet.getString("contentType"));
+                image.setPath(resultSet.getString("path"));
+                image.setMd5(resultSet.getString("md5"));
+                return image;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            // 5. 关闭链接
+            DBUtil.Close(connection, statement, resultSet);
+        }
+        return null;
+    }
     public static void main(String[] args) {
 
     }
