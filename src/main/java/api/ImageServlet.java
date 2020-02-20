@@ -83,7 +83,7 @@ public class ImageServlet extends HttpServlet {
         // 看看数据库中是否存在相同的 MD5 值的图片, 不存在, 返回 null
         Image existImage = imageDao.selectByMd5(image.getMd5());
 
-        imageDao.insert(image);
+        imageDao.inset(image);
 
         // 2. 获取图片的内容信息, 并且写入磁盘文件
         if (existImage == null) {
